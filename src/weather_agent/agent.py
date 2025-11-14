@@ -1,9 +1,12 @@
 from google.adk.agents.llm_agent import Agent
 from .weather import weather_client
-import json
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+API_KEY = os.environ.get("OPEN_WEATHER_API")
 
-weather_client = weather_client.WeatherClient("fakeapi_key")
+weather_client = weather_client.WeatherClient(API_KEY)
 
 root_agent = Agent(
     model='gemini-2.5-flash',
