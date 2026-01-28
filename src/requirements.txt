@@ -1,2 +1,5 @@
 google-adk==1.19.0
 python-dotenv
+azure-identity
+azure-ai-projects>=2.0.0b1
+dotenv
