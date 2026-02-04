@@ -14,9 +14,18 @@ class CurrencyAPIError(Exception):
     pass
 
 def get_currency(source_currency, target_currency):
-    """
-    Docstring for get_currency
-    """
+    """_summary_
+
+    Args:
+        source_currency (string): source currenct to 
+        target_currency (string): target currency to find exchange for
+
+    Raises:
+        CurrencyAPIError: currenct API exception when currency api returns error response
+
+    Returns:
+        string: JSON string
+    """    
     base_url = f"https://hexarate.paikama.co/api/rates/latest/{source_currency}?target={target_currency}"
     
     response = requests.get(base_url,verify=False)
@@ -38,7 +47,7 @@ def get_currency(source_currency, target_currency):
 root_agent = Agent(
     model='gemini-2.5-flash',
     name='root_agent',
-    description='A helpful assistant for user questions.',
-    instruction='Answer user questions to the best of your knowledge',
+    description='A helpful assistant for answering foregin exchange questions.',
+    instruction='Answer foreign exchange by using the tool get_currency',
     tools=[FunctionTool(get_currency)]
 )
