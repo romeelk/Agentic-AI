@@ -3,8 +3,18 @@ from azure.ai.projects import AIProjectClient
 from dotenv import load_dotenv
 import os
 import sys
+from openai import OpenAI 
+from openai.resources.responses import Responses
 
-def has_file_attachment(response)->bool:
+def has_file_attachment(response:Responses)->bool:
+    """ Checks if agent response contains a file attachment
+
+    Args:
+        response: OpenAI response
+
+    Returns:
+        bool: true if agent response has a file false if not
+    """    
     last_message = response.output[-1]
 
     return (last_message.type == "message"
@@ -12,9 +22,17 @@ def has_file_attachment(response)->bool:
         and last_message.content[-1].type == "output_text"
         and last_message.content[-1].annotations)
 
-def extract_file_from_response(response):
+def extract_file_from_response(response:Responses):
+    """Extract the file from the openai response.
+
+    Args:
+        response: OpenAI response
+
+    Returns:
+        tuple: file_id, file_name, container_id
+    """    
     last_message = response.output[-1]
-        
+
     file_citation = last_message.content[-1].annotations[-1]  # AnnotationContainerFileCitation
     if file_citation.type == "container_file_citation":
         print("Last conversation response generated a file")
@@ -26,7 +44,16 @@ def extract_file_from_response(response):
         return file_id, file_name, container_id
 
 
-def download_expense_file(openai_client, file_id, file_name, container_id):
+def download_expense_file(openai_client:OpenAI, file_id, file_name, container_id):
+    """ Downloads the Azure Foundry agents generated file which is generated
+        using the CodeInterpreter tool
+
+    Args:
+        openai_client (Open): _description_
+        file_id (string): the file_id of the file generated
+        file_name (string): the file_name generated 
+        container_id (string): the container_id - i think relates to the sandbox
+    """    
     file_content = openai_client.containers.files.content.retrieve(file_id=file_id, container_id=container_id)
     print(f"File ready for download: {file_name}")
     current_path = os.path.dirname(os.path.abspath(__file__))
@@ -85,5 +112,3 @@ while True:
 
     except:
         print("I was unable to process your query..")
-    # save_expense_file(None)
-
