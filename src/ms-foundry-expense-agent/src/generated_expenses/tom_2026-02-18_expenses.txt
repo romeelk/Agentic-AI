@@ -1,0 +1,6 @@
+Expense Report
+--------------------
+Email: tom@tom.com
+Date of Claim: 2026-02-18
+Description: Meal expense: Sandwich ($3) and Drink ($1)
+Amount Claimed: $4.00

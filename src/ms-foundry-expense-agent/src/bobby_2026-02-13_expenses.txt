@@ -1,9 +1,0 @@
-Expense Claim for bobby
-Date of Claim: 2026-02-13
-Email: tom@tom
-
-Expenses:
-- Burger with chips: $10
-- Drink: $2
-
-Total Amount: $12
