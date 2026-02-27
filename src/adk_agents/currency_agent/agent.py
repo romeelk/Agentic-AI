@@ -13,12 +13,12 @@ class CurrencyAPIError(Exception):
     """Custom exception for currency API errors"""
     pass
 
-def get_currency(source_currency, target_currency):
-    """_summary_
-
+def convert_currency(source_currency, target_currency):
+    """Converts the source currecny to the targe currency.
+       so that for example $1 = $1.31 (sterling)
     Args:
-        source_currency (string): source currenct to 
-        target_currency (string): target currency to find exchange for
+        source_currency (string): source currency to convert from
+        target_currency (string): target currency to conver to
 
     Raises:
         CurrencyAPIError: currenct API exception when currency api returns error response
@@ -47,7 +47,7 @@ def get_currency(source_currency, target_currency):
 root_agent = Agent(
     model='gemini-2.5-flash',
     name='root_agent',
-    description='A helpful assistant for answering foregin exchange questions.',
-    instruction='Answer foreign exchange by using the tool get_currency',
-    tools=[FunctionTool(get_currency)]
+    description='A helpful assistant for converting currencies.',
+    instruction='Answer foreign exchange currency conversions by using the tool convert_currency. Use your knowledge of currecny codes to answer queries about currency codes.',
+    tools=[FunctionTool(convert_currency)]
 )
