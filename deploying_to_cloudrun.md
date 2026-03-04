@@ -33,9 +33,9 @@ gcloud run deploy --source .
 
 ```
 
-You will be prompted to select an agent to deploy. type one of the sub agents. For example adkagent
+You will be prompted to select an agent to deploy. type one of the sub agents. For example currencyagent
 ```
-Service name (adkagents):  adkagent
+Service name (adkagents):  currencyagent
 
 Once deployed gcloud cli should print
 

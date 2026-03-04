@@ -11,11 +11,12 @@ Agentic AI is now a production reality. They have already impacted the SDLC thro
 - Claude Code
 - GitHub CoPilot
 
-With rapid improvements to what is now termed "context" engineering, coding agents are augmenting or autmating software
-development.
+With rapid improvements to what is now termed "context" engineering, coding agents are augmenting the SDLC.
 
-Agentic AI agents are autonmous agents that use LLM models that can:
-- autonomously accomplish tasks on humans behalf  
+Agentic AI agents are autonmous agents that use LLM models that can: 
+- Perform reasoning and planning
+- Autonomously accomplish tasks on humans behalf
+
 
 They are essentially Agents that can carry out workflows - a sequence of steps to meet the user goals autonomosly. This means
 they can plan a series of steps to achieve a programming task. Write and test the code, commit the changes and raise pull requests.
