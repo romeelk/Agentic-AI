@@ -1,86 +1,71 @@
+import json
+from typing import Any
+
+import requests
 from google.adk.agents.llm_agent import Agent
 from google.adk.tools import FunctionTool
-import requests
-import json
 
-from google.adk.tools import FunctionTool
 
-STATUS_MESSAGES = {
-    422: "invalid currency",
-    500: "currency service unavailable",
-}
 class CurrencyAPIError(Exception):
-    """Custom exception for currency API errors"""
-    pass
+    """Custom exception for currency API errors."""
 
-def check_currency_code(currency_code):
-    """Calls hexarate currency api to check if ISO currency code
-    is valid 
 
-    Args:
-        currency_code (str): the ISO currency code to check
+def _request_json(url: str, timeout: int = 10) -> dict[str, Any]:
+    """Fetch and parse JSON from the currency API."""
+    try:
+        response = requests.get(url, timeout=timeout, verify=False)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        raise CurrencyAPIError("currency service unavailable") from exc
 
-    Raises:
-        CurrencyAPIError: Raises a custom exception if REST api responds
-        with non 200 status code.
+    try:
+        payload = response.json()
+    except (json.JSONDecodeError, ValueError) as exc:
+        raise CurrencyAPIError("Invalid response format") from exc
 
-    Returns:
-        str: json payload message
-    """
-    base_url = f"https://hexarate.paikama.co/api/currencies/{currency_code}"
-    
-    response = requests.get(base_url,verify=False)
+    if not isinstance(payload, dict) or "data" not in payload:
+        raise CurrencyAPIError("Invalid response format")
 
-    if response.status_code == 200:
-        try:
-           
-            data = response.json()
-            currency_code = data["data"]["code"]
-            currency_name = data["data"]["name"]
-            
-            return json.dumps({"currency_code":currency_code,"currency_name":currency_name})
-        except (KeyError, IndexError, json.JSONDecodeError) as e:
-            raise CurrencyAPIError(f"Invalid response format: {e}")
-    else:
-        data = response.json()
-        message = data["data"]["message"]
-    return json.dumps({"message":message})   
-    
-def convert_currency(source_currency, target_currency):
-    """Converts the source currency to the target currency.
-       so that for example $1 = $1.31 (sterling)
-    Args:
-        source_currency (string): source currency to convert from
-        target_currency (string): target currency to convert to
+    data = payload["data"]
+    if not isinstance(data, dict):
+        raise CurrencyAPIError("Invalid response format")
 
-    Raises:
-        CurrencyAPIError: currenct API exception when currency api returns error response
+    return data
 
-    Returns:
-        string: JSON string
-    """    
-    base_url = f"https://hexarate.paikama.co/api/rates/latest/{source_currency}?target={target_currency}"
-    
-    response = requests.get(base_url,verify=False)
-    if response.status_code == 200:
-        try:
-           
-            data = response.json()
-            source = data["data"]["base"]
-            target = data["data"]["target"]
-            rate = data["data"]["mid"]
-            return json.dumps({"source":source,"target":target,"rate":rate})
-        except (KeyError, IndexError, json.JSONDecodeError) as e:
-            raise CurrencyAPIError(f"Invalid response format: {e}")
-    else:
-        data = response.json()
-        message = data["data"]["message"]
-    return json.dumps({"message":message})
+
+def check_currency_code(currency_code: str) -> dict[str, Any]:
+    """Check whether a currency code is valid and return its details."""
+    data = _request_json(f"https://hexarate.paikama.co/api/currencies/{currency_code}")
+
+    try:
+        return {
+            "currency_code": data["code"],
+            "currency_name": data["name"],
+        }
+    except KeyError as exc:
+        raise CurrencyAPIError(f"Invalid response format: {exc}") from exc
+
+
+def convert_currency(source_currency: str, target_currency: str) -> dict[str, Any]:
+    """Convert one currency to another and return the exchange rate details."""
+    data = _request_json(
+        f"https://hexarate.paikama.co/api/rates/latest/{source_currency}?target={target_currency}"
+    )
+
+    try:
+        return {
+            "source": data["base"],
+            "target": data["target"],
+            "rate": data["mid"],
+        }
+    except KeyError as exc:
+        raise CurrencyAPIError(f"Invalid response format: {exc}") from exc
+
 
 root_agent = Agent(
-    model='gemini-2.5-flash',
-    name='root_agent',
-    description='A helpful assistant for converting currencies.',
-    instruction='Answer foreign exchange currency conversions by using the tool convert_currency. Use your tool check_currency_code  to answer queries about currency codes.',
-    tools=[FunctionTool(convert_currency), FunctionTool(check_currency_code)]
+    model="gemini-2.5-flash",
+    name="root_agent",
+    description="A helpful assistant for converting currencies.",
+    instruction="Answer foreign exchange currency conversions by using the tool convert_currency. Use your tool check_currency_code to answer queries about currency codes.",
+    tools=[FunctionTool(convert_currency), FunctionTool(check_currency_code)],
 )
