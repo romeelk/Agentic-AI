@@ -21,7 +21,7 @@ def check_currency_code(currency_code):
         currency_code (str): the ISO currency code to check
 
     Raises:
-        CurrencyAPIError: Raises a custom exeception if REST api responds
+        CurrencyAPIError: Raises a custom exception if REST api responds
         with non 200 status code.
 
     Returns:
