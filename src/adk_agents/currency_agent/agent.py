@@ -13,12 +13,45 @@ class CurrencyAPIError(Exception):
     """Custom exception for currency API errors"""
     pass
 
+def check_currency_code(currency_code):
+    """Calls hexarate currency api to check if ISO currency code
+    is valid 
+
+    Args:
+        currency_code (str): the ISO currency code to check
+
+    Raises:
+        CurrencyAPIError: Raises a custom exeception if REST api responds
+        with non 200 status code.
+
+    Returns:
+        str: json payload message
+    """
+    base_url = f"https://hexarate.paikama.co/api/currencies/{currency_code}"
+    
+    response = requests.get(base_url,verify=False)
+
+    if response.status_code == 200:
+        try:
+           
+            data = response.json()
+            currency_code = data["data"]["code"]
+            currency_name = data["data"]["name"]
+            
+            return json.dumps({"currency_code":currency_code,"currency_name":currency_name})
+        except (KeyError, IndexError, json.JSONDecodeError) as e:
+            raise CurrencyAPIError(f"Invalid response format: {e}")
+    else:
+        data = response.json()
+        message = data["data"]["message"]
+    return json.dumps({"message":message})   
+    
 def convert_currency(source_currency, target_currency):
-    """Converts the source currecny to the targe currency.
+    """Converts the source currency to the target currency.
        so that for example $1 = $1.31 (sterling)
     Args:
         source_currency (string): source currency to convert from
-        target_currency (string): target currency to conver to
+        target_currency (string): target currency to convert to
 
     Raises:
         CurrencyAPIError: currenct API exception when currency api returns error response
@@ -48,6 +81,6 @@ root_agent = Agent(
     model='gemini-2.5-flash',
     name='root_agent',
     description='A helpful assistant for converting currencies.',
-    instruction='Answer foreign exchange currency conversions by using the tool convert_currency. Use your knowledge of currecny codes to answer queries about currency codes.',
-    tools=[FunctionTool(convert_currency)]
+    instruction='Answer foreign exchange currency conversions by using the tool convert_currency. Use your tool check_currency_code  to answer queries about currency codes.',
+    tools=[FunctionTool(convert_currency), FunctionTool(check_currency_code)]
 )
