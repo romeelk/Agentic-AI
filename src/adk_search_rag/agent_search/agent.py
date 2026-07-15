@@ -15,9 +15,8 @@ if DATA_STORE_ID is None:
     exit()
 
 root_agent = Agent(
-    model='gemini-2.5-flash',
+    model='gemini-flash-latest',
     name='root_agent',
-    description='A helpful assistant for user questions.',
-    instruction='Answer user questions. Use the search tool to answer questions relating to expenses. Do not make any answers up? If asked about fictional entities you must not respond with actual data.',
-    tools=[search_tool]
+    description='Enterprise document search assistant with Agent Search capabilities.',
+    instruction='Answer user questions. Use the search tool to answer questions relating to expenses. Always cite sources when available. If the query is not found in the expense policy politely inform the user.'
 )
