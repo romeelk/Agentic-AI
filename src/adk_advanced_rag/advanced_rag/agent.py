@@ -55,7 +55,7 @@ def load_msft_ticker_data(query_date:str):
 root_agent = LlmAgent(
     model='gemini-2.5-flash',
     name='root_agent',
-    description='A helpful assistant for user questions.',
+    description='A helpful assistant for answering user questions about Microsoft Q2 earnings and two weeks worht of Stock prices',
     tools=[AgentTool(doc_qa_agent),load_msft_ticker_data],
     instruction="""Answer user questions about Microsofts stock prices. You have been provided a file via the tool load_msft_ticker_data that lists the last two weeks of July stock listsings.' \
     If you cannot find the stock listings given a particular date, then respond That you have only data  29th June 2026 upto including 15th July 2026. You can also use doc_qa_agent tool to lookup microsoft earnings report info "
