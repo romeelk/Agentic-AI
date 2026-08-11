@@ -1,4 +1,5 @@
 from google.adk.agents.llm_agent import Agent, LlmAgent
+from google.genai.types import GenerateContentConfig 
 from google.adk.tools import FunctionTool
 from google.adk.tools import VertexAiSearchTool
 from google.adk.tools import AgentTool
@@ -55,6 +56,7 @@ def load_msft_ticker_data(query_date:str):
 root_agent = LlmAgent(
     model='gemini-2.5-flash',
     name='root_agent',
+    generate_content_config=GenerateContentConfig(temperature=0.,),
     description='A helpful assistant for answering user questions about Microsoft Q2 earnings and two weeks worht of Stock prices',
     tools=[AgentTool(doc_qa_agent),load_msft_ticker_data],
     instruction="""Answer user questions about Microsofts stock prices. You have been provided a file via the tool load_msft_ticker_data that lists the last two weeks of July stock listsings.' \

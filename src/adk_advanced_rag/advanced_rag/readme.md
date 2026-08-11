@@ -15,3 +15,18 @@ It has two sources of grounding:
 Two tools are defined:
 - a Function that loads a csv as a panda dataframe representing MSFT stock prices for two weeks
 - a search tool that uses Vertex AI data source - grounded with MSFT Q2 results pdf doc
+
+## Performing Evals
+
+Evaluations allow developers to test the non-dertiministic nature of LLMs in agents.
+
+The key focus of Evals includes:
+
+- Accuracy of responses 
+- Tool trajectory - Does the agent workflow follow the expected logical sequence of Tool calls to perform a task
+- This is important wherre business logic must follow a strict order 
+
+## Creating a Golden dataset
+
+In adk, the first step is to record your human interactions with your Agent to gather a history of conversation for a particular task.
+
