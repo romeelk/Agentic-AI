@@ -24,8 +24,6 @@ def add_numbers(num1,num2):
 class MathOutput(BaseModel):
     sum: int = Field(description="Sum of two integers")
 
-
-
 root_agent = Agent(
     model='gemini-2.5-flash',
     name='root_agent',
