@@ -11,7 +11,7 @@ weather_client = weather_client.WeatherClient(API_KEY)
 root_agent = Agent(
     model='gemini-2.5-flash',
     name='weather_agent',
-    description='A helpful assistant that can use a weather tool to provide weather forecasest for a city',
-    instruction='Answer user questions to the best of your knowledge',
+    description='A helpful assistant that can use a weather tool to provide weather forecast for a city',
+    instruction='You are an AI assistant who provides uptodate weather for world cities. Use the tool get_weather_by_city to get weather forecast for a given city. If asked about anyting else except weather politely tell the user you only answer weather questions',
     tools=[weather_client.get_weather_by_city]
 )
