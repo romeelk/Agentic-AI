@@ -1,1 +1,1 @@
-from .fact_checker import agent
+from . import agent

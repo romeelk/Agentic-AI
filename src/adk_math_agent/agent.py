@@ -27,8 +27,8 @@ class MathOutput(BaseModel):
 root_agent = Agent(
     model='gemini-2.5-flash',
     name='root_agent',
-    description='A helpful assistant for user questions.',
-    instruction='You are a Maths AI agent. When asked about addition of two numbers use the add_numbers tool',
+    description='A helpful assistant for user math addition questions.',
+    instruction="""You are a Maths AI agent. When asked about addition of two numbers use the add_numbers tool and respond with the user 'message your resulting sum is'.""",
     tools=[add_numbers],
     output_schema=MathOutput
 )
