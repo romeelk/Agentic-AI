@@ -15,10 +15,10 @@ The current VS code extension is designed to use the new AI Foundry portal.
 
 There are essentially three types of Agent that can be created in AI Foundry new portal experience.
 
-- Prompt Agents via AI foundry Portal. These agents are developed using Foundry SDK. This is an API that exposes clients 
+- Prompt Agents via MS foundry Portal. These agents are developed using Foundry SDK. This is an API that exposes clients 
 to interact with Foundry Service using primitives that allow you to interact with AI foundry project, and wraps OpenAI APIs to interact with chats, responeses, maintain conversations across sessions.
 - Hosted Agents (Preview) - Agents developed locally using Micrsofts new Agent Framework SDK
-- Workflow Agents - via AI foundry Portal - Workflows are UI-based tools in Microsoft Foundry. Use them to create declarative, predefined sequences of actions that orchestrate agents and business logic in a visual builder.
+- Workflow Agents - via MS Foundry Portal - Workflows are UI-based tools in Microsoft Foundry. Use them to create declarative, predefined sequences of actions that orchestrate agents and business logic in a visual builder.
 
 Workflows Agents are ideal for scenarios where you need to:
 
