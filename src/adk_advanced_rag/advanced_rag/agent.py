@@ -46,7 +46,7 @@ def load_msft_ticker_data(query_date:str):
         if match_stock.empty:
             return {"status":"error","error_msg":f"Could not find stock price for date:{query_date}"}
         else:
-        # find row by date
+            # find row by date
             return convert_dataframe_to_json(stock_data_df.loc[stock_data_df["Date"]==query_date].iloc[0])
     except FileNotFoundError:
         return {"status": "error", "message": "Stock data file (MSFT_last_two_weeks_with_ticke.csv) not found."}

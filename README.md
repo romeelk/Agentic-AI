@@ -1,32 +1,29 @@
 # Agentic-AI
-A repository demonstrating Agentic driven workflows using various AI SDKs
+Welcome to my Agenti-AI repository. Explore this repository for examples on developing
+Agentic solutions with your chosen LLM via Azure or Google Cloud.
 
-- Google ADK (Agent Development Kit)
-- Agents SDK from Microsoft AI Foundry (Microsofts version of Open AI SDKs)
-- Agent Framework SDK - New Agentic Framework that combines pros and cons from Semantic Kernel and Autogen frameworks 
+## Objectives
 
-## What is Agentic AI
+This repository is for developers, Architects who want to learn the key concepts for 
+developing Agentic AI solutions. 
+Key concepts covered:
+- Getting started with basic agent setup on Microsoft Foundry and Google Cloud
+- How to use tools with Agentic workflows
+- Applying RAG patterns with Agentic workflows for grounding
+- Agent work flow patterns such as Sequential, Parallel and more to follow
+- Agent evaluations (evals) for testing the validity of your Agent workflows using different eval metrics 
 
-Agentic AI is now a production reality. They have already impacted the SDLC through Coding Agents such as
-- Claude Code
-- GitHub CoPilot
+## Pre-requsities
 
-With rapid improvements to what is now termed "context" engineering, coding agents are augmenting the SDLC.
+For developing with Azure you will need:
 
-Agentic AI agents are autonmous agents that use LLM models that can: 
-- Perform reasoning and planning
-- Autonomously accomplish tasks on humans behalf
+- A active Azure Subscrtiption
+- A deployed Microsoft Foundry project  
+- A deployed LLM Agent via Microsoft Foundry
 
 
-They are essentially Agents that can carry out workflows - a sequence of steps to meet the user goals autonomosly. This means
-they can plan a series of steps to achieve a programming task. Write and test the code, commit the changes and raise pull requests.
+For developing against Google Cloud you will need
+- A active Google Cloud project
+- Google Agent Development Kit (ADK) for Python
 
-## What is Agentic AI comprised of?
-
-Agentic systems are based on:
-
-- A Model. A LLM powering the agent's reasoning and decision making
-- Tools. Functions that LLMs can use to carry out actions with the environment they interact with.
-- Instructions. Explicit human instructions and guardrails on how the agent behaves.
-- Memory. Uses it memory to remember context.
 
