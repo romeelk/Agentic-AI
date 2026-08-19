@@ -39,7 +39,7 @@ def main():
     """
     print("Welcome to basic Prompt Agent from Microsoft Foundry")
     current_date_time = datetime.datetime.now(datetime.timezone.utc)
-    print(f"The current date time is:{current_date_time.strftime("%d-%m-%Y %H:%M:%S")}")
+    print(f"The current date time is:{current_date_time.strftime('%d-%m-%Y %H:%M:%S')}")
 
     endpoint = os.getenv("FOUNDRY_PROJECT_ENDPOINT", None)
     agent_name = os.getenv("AGENT_NAME", None)
