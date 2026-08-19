@@ -119,6 +119,6 @@ def main():
 if __name__ == "__main__":
     # run agent main loop
     try:
-      main()
+        main()
     except Exception as e:
         print(f"Error creating agent at line {e.__traceback__.tb_lineno}: {traceback.format_exc()}")
