@@ -82,8 +82,8 @@ def main():
                 },
             )
 
-            if hasattr(response.output[-1].content[-1], "annotations"):
-                file_name = _get_citation_filename(response.output[-1])
+            file_name = _get_citation_filename(response.output[-1])
+            if file_name:
                 print(f"{response.output_text} (source:{file_name})")
             else:
                 print(f"{response.output_text}")
