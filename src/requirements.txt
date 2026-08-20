@@ -6,3 +6,4 @@ dotenv
 openai
 pytz
 pandas
+agent-framework
